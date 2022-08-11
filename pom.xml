@@ -8,6 +8,7 @@
   <modules>
     <module>customer</module>
     <module>invoice</module>
+    <module>EurekaServer</module>
   </modules>
   <name>ae-microservices</name>
   <properties>

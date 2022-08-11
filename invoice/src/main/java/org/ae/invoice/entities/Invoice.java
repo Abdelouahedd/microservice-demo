@@ -2,10 +2,14 @@ package org.ae.invoice.entities;
 
 import lombok.*;
 import org.ae.cutomer.entities.Customer;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 
 @Entity
 @Getter
@@ -27,7 +31,7 @@ public class Invoice {
   private Integer id;
   private BigDecimal amount;
   private Integer customerId;
-  private LocalDate createAt = LocalDate.now();
+  private LocalDateTime createAt;
   @Transient
   private Customer customer;
 }
