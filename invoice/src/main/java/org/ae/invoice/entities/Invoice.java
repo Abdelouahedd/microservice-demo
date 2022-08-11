@@ -5,6 +5,7 @@ import org.ae.cutomer.entities.Customer;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -26,6 +27,7 @@ public class Invoice {
   private Integer id;
   private BigDecimal amount;
   private Integer customerId;
+  private LocalDate createAt = LocalDate.now();
   @Transient
   private Customer customer;
 }

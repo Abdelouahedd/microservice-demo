@@ -15,3 +15,6 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  cloud:
+    discovery:
+      enabled: true
