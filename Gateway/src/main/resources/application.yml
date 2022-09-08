@@ -4,6 +4,20 @@ server:
 spring:
   application:
     name: GATEWAY-SERVICE
+#  main:
+#    web-application-type: reactive
+#    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: ecommerce-app
+            client-secret: PzP1SaROEhym1CE4bKT88LIpYRqSOpbz
+            scope: openid, profile, email, roles
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/myapp
   cloud:
     gateway:
       discovery:
@@ -14,10 +28,14 @@ spring:
           uri: lb://CUSTOMER-SERVICE
           predicates:
             - Path=/api/customers/**
+          filters:
+            - TokenRelay=
         - id: invoice
           uri: lb://INVOICE-SERVICE
           predicates:
             - Path=/api/invoices/**
+          filters:
+            - TokenRelay=
   zipkin:
     base-url: http://localhost:9411
 management:
@@ -31,3 +49,6 @@ eureka:
       defaultZone: http://localhost:8761/eureka
     fetch-registry: true
     register-with-eureka: true
+logging:
+  level:
+    org.springframework.security.*: trace

@@ -1,0 +1,28 @@
+{
+  "realm" : "master",
+  "users" : [ {
+    "id" : "72aa67a2-8fee-480f-a21e-a7d9cbb70dda",
+    "createdTimestamp" : 1662548698795,
+    "username" : "admin",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "email" : "ae@ae.com",
+    "credentials" : [ {
+      "id" : "9a29d57b-a3fc-4338-89ff-3ecdfa3d2748",
+      "type" : "password",
+      "createdDate" : 1662548699055,
+      "secretData" : "{\"value\":\"7aPmJ/XtXDIQpRIXz5eliVj+akeEfCdbCLpWq4sy4ErgoesZXraQNlm80/PSgFXzzMGNQPfK+ZQrPFdx2cl68g==\",\"salt\":\"Cbvyyv91jkhcFnY9VTM2zA==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-master", "admin" ],
+    "clientRoles" : {
+      "myapp-realm" : [ "query-clients", "manage-identity-providers", "manage-users", "view-events", "view-authorization", "query-users", "query-realms", "query-groups", "manage-authorization", "manage-clients", "view-users", "view-identity-providers", "manage-realm", "create-client", "view-realm", "view-clients", "manage-events" ],
+      "microservice-app-realm" : [ "query-users", "create-client", "view-users", "view-identity-providers", "manage-identity-providers", "manage-users", "view-authorization", "manage-realm", "manage-clients", "view-events", "view-realm", "query-clients", "query-groups", "manage-events", "view-clients", "query-realms", "manage-authorization" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}

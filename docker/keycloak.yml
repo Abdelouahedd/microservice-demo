@@ -4,15 +4,16 @@ services:
     image: quay.io/keycloak/keycloak:19.0.1
     command:
       [
-        "start-dev", "--import-realm"
+        "import --dir /opt/jboss/keycloak/realm-config && /opt/keycloak/bin/kc.sh start-dev",
       ]
     volumes:
-      - ./realm-config:/opt/keycloak/data/import/realm-export.json:ro,z
+      - ./realm-config:/opt/jboss/keycloak/realm-config
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
       - DB_VENDOR=h2
       - PROXY_ADDRESS_FORWARDING=true
+      - KEYCLOAK_IMPORT=/opt/jboss/keycloak/realm-config
     # If you want to expose these ports outside your dev PC, remove the "127.0.0.1:" prefix
     #    ports:
     #      - 127.0.0.1:8081:8080
