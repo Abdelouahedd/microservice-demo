@@ -1,0 +1,29 @@
+{
+  "realm" : "myapp",
+  "users" : [ {
+    "id" : "42b8713e-1ed6-45e3-bdb0-f395e798891a",
+    "createdTimestamp" : 1662556364228,
+    "username" : "ae",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : true,
+    "firstName" : "abdo",
+    "lastName" : "en",
+    "email" : "abdelouahed@gmail.com",
+    "credentials" : [ {
+      "id" : "8b1a55c2-2ad1-4629-be64-e9700386a271",
+      "type" : "password",
+      "createdDate" : 1662561636319,
+      "secretData" : "{\"value\":\"7rX2PIFL+7AVOIkoQeStsoGuYvTHSL1PYQ30PuIUDyoK9qTmKHbSMsGuMwLsr1NNzF9wyXkKIE6ESGeaUFrM/Q==\",\"salt\":\"gsk9AKEDEXPu8D6Ac5hqcw==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-myapp" ],
+    "clientRoles" : {
+      "ecommerce-app" : [ "ROLE_ADMIN" ]
+    },
+    "notBefore" : 1662562868,
+    "groups" : [ ]
+  } ]
+}
