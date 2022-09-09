@@ -15,7 +15,7 @@ public class InvoiceRestController {
   private final InvoiceService invoiceService;
 
   @PostMapping
-  public InvoiceDto saveInvoice(InvoiceRequest invoiceRequest) {
+  public InvoiceDto saveInvoice(@RequestBody InvoiceRequest invoiceRequest) {
     return invoiceService.saveInvoice(invoiceRequest);
   }
 
