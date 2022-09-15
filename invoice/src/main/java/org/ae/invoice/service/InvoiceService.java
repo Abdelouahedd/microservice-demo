@@ -1,9 +1,10 @@
 package org.ae.invoice.service;
 
 import lombok.AllArgsConstructor;
-import org.ae.cutomer.entities.Customer;
+
 import org.ae.invoice.dto.InvoiceDto;
 import org.ae.invoice.dto.InvoiceMapper;
+import org.ae.invoice.entities.Customer;
 import org.ae.invoice.entities.Invoice;
 import org.ae.invoice.openFeign.CustomerServiceClient;
 import org.ae.invoice.repository.InvoiceRepository;

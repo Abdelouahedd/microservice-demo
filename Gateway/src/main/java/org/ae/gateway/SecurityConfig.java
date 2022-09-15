@@ -33,10 +33,12 @@ public class SecurityConfig {
   SecurityWebFilterChain filterChain(ServerHttpSecurity http) {
     return http
       .csrf().disable()
-      .authorizeExchange(exchange -> exchange.anyExchange().authenticated())
+      .authorizeExchange(exchanges -> exchanges
+        .pathMatchers("/actuator/**").permitAll()
+        .anyExchange().authenticated()
+      )
       .oauth2Login(Customizer.withDefaults())
-      .logout()
-      .logoutUrl("http://localhost:8080/auth/realms/myapp/protocol/openid-connect/logout").and().build();
+      .logout().and().build();
   }
 
 

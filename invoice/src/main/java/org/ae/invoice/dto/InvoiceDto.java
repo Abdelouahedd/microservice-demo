@@ -2,7 +2,7 @@ package org.ae.invoice.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.ae.cutomer.entities.Customer;
+import org.ae.invoice.entities.Customer;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
