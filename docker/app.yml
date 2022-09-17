@@ -1,0 +1,143 @@
+version: "3.8"
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:19.0.1
+    command:
+      [
+        "import --dir /opt/jboss/keycloak/realm-config && /opt/keycloak/bin/kc.sh start-dev"
+      ]
+    extra_hosts:
+      - host.docker.internal:host-gateway
+      - keycloak:127.0.0.1
+    volumes:
+      - ./realm-config:/opt/jboss/keycloak/realm-config
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - DB_VENDOR=h2
+      - PROXY_ADDRESS_FORWARDING=false
+      - KEYCLOAK_IMPORT=/opt/jboss/keycloak/realm-config
+      - KC_HEALTH_ENABLED=true
+      - KC_HOSTNAME_STRICT=false
+    ports:
+      - "8080:8080"
+      - "9080:9080"
+      - "9443:9443"
+      - "10990:10990"
+    healthcheck:
+      test: "curl -f http://localhost:8080/health | grep UP || exit 1"
+      interval: 25s
+      timeout: 2s
+      retries: 15
+    networks:
+      - microservice-network
+
+  eureka:
+    image: ae/eureka
+    build:
+      context: ../EurekaServer
+      dockerfile: Dockerfile
+    environment:
+      - ZIPKIN_URL=zipkin
+    ports:
+      - "8761:8761"
+    depends_on:
+      - zipkin
+    links:
+      - zipkin
+    networks:
+      - microservice-network
+
+  gateway-server:
+    image: ae/gateway-server
+    build:
+      context: ../Gateway
+      dockerfile: Dockerfile
+    environment:
+      - ZIPKIN_URL=zipkin
+      - KEYCLOAK_URL=keycloak
+      - EUREKA_URL=eureka
+    ports:
+      - "9000:9000"
+    depends_on:
+      - keycloak
+    restart: on-failure
+    healthcheck:
+      test: "curl --fail --silent localhost:9000/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    networks:
+      - microservice-network
+
+  customer:
+    image: ae/customer:latest
+    build:
+      context: ../customer
+      dockerfile: Dockerfile
+    environment:
+      - ZIPKIN_URL=http://zipkin:9411
+      - KEYCLOAK_URL=http://keycloak:8080
+      - eureka.client.serviceUrl.defaultZone=http://eureka:8761/eureka
+    ports:
+      - "8089:8089"
+    depends_on:
+      - gateway-server
+      - zipkin
+      - keycloak
+    links:
+      - eureka
+      - gateway-server
+      - zipkin
+      - keycloak
+    restart: on-failure
+    networks:
+      - microservice-network
+    healthcheck:
+      test: "curl --fail --silent localhost:8089/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  invoice:
+     image: ae/invoice:latest
+     build:
+       context: ../invoice
+       dockerfile: Dockerfile
+
+     environment:
+       - ZIPKIN_URL=zipkin
+       - KEYCLOAK_URL=keycloak
+       - eureka.client.serviceUrl.defaultZone=http://eureka:8761/eureka
+     ports:
+       - "8081:8081"
+     depends_on:
+       - gateway-server
+       - zipkin
+     links:
+       - gateway-server
+       - zipkin
+       - keycloak
+     restart: on-failure
+     networks:
+       - microservice-network
+     healthcheck:
+       test: "curl --fail --silent localhost:8081/actuator/health | grep UP || exit 1"
+       interval: 20s
+       timeout: 5s
+       retries: 5
+       start_period: 40s
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - microservice-network
+#
+networks:
+   microservice-network:
+    driver: bridge
+

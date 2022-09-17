@@ -1,14 +1,10 @@
 package org.ae.invoice.entities;
 
 import lombok.*;
-import org.ae.cutomer.entities.Customer;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 
 @Entity

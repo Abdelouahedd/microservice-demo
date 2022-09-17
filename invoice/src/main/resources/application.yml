@@ -21,15 +21,15 @@ spring:
   eureka:
     client:
       service-url:
-        defaultZone: http://localhost:8761/eureka
+        defaultZone: http://${EUREKA_URL:localhost}:8761/eureka
   zipkin:
-    base-url: http://localhost:9411
+    base-url: http://${ZIPKIN_URL:localhost}:9411
   security:
     oauth2:
       resource-server:
         jwt:
-          issuer-uri: "http://localhost:8080/realms/myapp"
-          jwk-set-uri: "http://localhost:8080/realms/myapp/protocol/openid-connect/certs"
+          issuer-uri: "http://${KEYCLOAK_URL:localhost}:8080/realms/myapp"
+          jwk-set-uri: "http://${KEYCLOAK_URL:localhost}:8080/realms/myapp/protocol/openid-connect/certs"
 
 
 keycloak:
