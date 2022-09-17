@@ -17,7 +17,7 @@ spring:
             scope: openid, profile, email, roles
         provider:
           keycloak:
-            issuer-uri: http://localhost:8080/realms/myapp
+            issuer-uri: http://${KEYCLOAK_URL:localhost}:8080/realms/myapp
   cloud:
     gateway:
       discovery:
@@ -37,7 +37,7 @@ spring:
           filters:
             - TokenRelay=
   zipkin:
-    base-url: http://localhost:9411
+    base-url: http://${ZIPKIN_URL:localhost}:9411
 management:
   endpoints:
     web:
@@ -46,9 +46,11 @@ management:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://${EUREKA_URL:localhost}:8761/eureka
     fetch-registry: true
     register-with-eureka: true
+  instance:
+      preferIpAddress: true
 logging:
   level:
     org.springframework.security.*: trace
